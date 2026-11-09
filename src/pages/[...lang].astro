@@ -1,0 +1,41 @@
+---
+
+import Globe from "../components/Globe.astro";
+import {copy} from "../copy";
+import "../styles/site.css";
+export function getStaticPaths() {
+  return [{ params:{lang:undefined}, props:{locale:"es" as const} },{ params:{lang:"en"}, props:{locale:"en" as const} }];
+}
+const {locale}=Astro.props;
+const t=copy[locale];
+const english=locale==="en";
+const ids=["services","process","contact"];
+const mail="mailto:psmart.info@gmail.com";
+---
+<!doctype html>
+<html lang={locale}><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="description" content={t.intro}/><title>{english?"Web, software & AI":"Desarrollo web, software e IA"} | PSMART</title></head>
+<body>
+<a class="skip" href="#main">{t.skip}</a>
+<header><div class="wrap flex items-center justify-between gap-4">
+<a class="brand" href="./"><img src={english?"../psmart-header.png":"./psmart-header.png"} alt="PSMART" width="384" height="222" /></a>
+<nav class="flex items-center gap-7" aria-label={english?"Main":"Principal"}>{t.nav.map((s,i)=><a href={"#"+ids[i]}>{s}</a>)}</nav>
+<div class="languages"><a href={english?"../":"./"} lang="es" aria-current={!english?"page":undefined}>ES</a><a href={english?"./":"./en/"} lang="en" aria-current={english?"page":undefined}>EN</a></div>
+</div></header>
+<main id="main">
+<section class="hero"><div class="wrap hero-layout">
+<div><p class="eyebrow"><i></i>{t.eyebrow}</p><h1>{t.title.map((part,i)=><span class={i===2?"accent":""}>{part}</span>)}</h1><p class="intro">{t.intro}</p><div class="actions flex flex-wrap items-center gap-6"><a class="button" href="#contact">{t.email} <b>↗</b></a><a class="secondary" href="#services">{t.explore} ↓</a></div></div>
+<figure aria-label={english?"Connections from Bolivia to the world":"Conexiones desde Bolivia al mundo"}><Globe/></figure></div></section>
+<section class="wrap section" id="services"><p class="label">{t.nav[0]}</p><h2>{t.services}</h2><div class="cards grid md:grid-cols-3 gap-5">{t.items.map(([name,desc],i)=><article><div class="icon" aria-hidden="true">{["〈/〉","⌘","✧"][i]}</div><h3>{name}</h3><p>{desc}</p></article>)}</div></section>
+<section class="process" id="process"><div class="wrap section"><p class="label">{t.nav[1]}</p><h2>{t.process}</h2><ol class="grid md:grid-cols-3 gap-8">{t.steps.map(([name,desc],i)=><li><small>0{i+1}</small><h3>{name}</h3><p>{desc}</p></li>)}</ol></div></section>
+<section class="contact-band" id="contact"><div class="wrap contact-layout">
+  <div><p class="eyebrow"><i></i>{t.nav[2]}</p><h2>{t.contact}</h2><p class="contact-intro">{english?"Tell us what you have in mind. We can discuss the scope by email or start with a quick chat.":"Cuéntanos qué tienes en mente. Podemos conversar sobre el alcance por correo o empezar con un mensaje breve."}</p></div>
+  <div class="channels">
+    <a href={mail}><span><strong>{english?"Send an email":"Escribir por correo"}</strong><small>psmart.info@gmail.com</small></span><b aria-hidden="true">↗</b></a>
+    <a href="https://wa.me/59170792417"><span><strong>{english?"Chat on WhatsApp":"Conversar por WhatsApp"}</strong><small>+591 70792417</small></span><b aria-hidden="true">↗</b></a>
+  </div>
+</div></section>
+</main></body></html>
+
+
+
+

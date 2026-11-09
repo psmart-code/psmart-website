@@ -1,0 +1,1 @@
+{"name":"psmart","private":true,"type":"module","scripts":{"dev":"astro dev","build":"astro build"},"dependencies":{"@astrojs/check":"^0.9.12","@tailwindcss/vite":"^4.3.5","astro":"^5.0.0","tailwindcss":"^4.3.5","typescript":"^5.9.3"}}
